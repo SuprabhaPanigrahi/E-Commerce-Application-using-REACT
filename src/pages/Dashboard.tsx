@@ -3,7 +3,7 @@ import axios from "axios";
 import { GridContainer, ProductGrid } from "@/styles/dashboardStyle";
 import FilterBar from "@/components1/FilterBar";
 import ProductCard from "@/components1/ProductCard";
-import CartIcon  from "@/components1/CartIcon";
+import CartIcon from "@/components1/CartIcon";
 
 interface Product {
   id: number;
@@ -32,11 +32,11 @@ const Dashboard: React.FC = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get("https://fakestoreapi.com/products");
-        const data = response.data;
+        const data = response.data as Product[];
         setProducts(data);
         setFiltered(data);
-        setCategories(["all", ...new Set(data.map((p: Product) => p.category))]);
-        const prices = data.map((p: Product) => p.price);
+        setCategories(["all", ...new Set(data.map((p) => p.category))]);
+        const prices = data.map((p) => p.price);
         setPriceRange([Math.min(...prices), Math.max(...prices)]);
       } catch (error) {
         console.error("Error fetching products:", error);
